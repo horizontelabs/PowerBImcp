@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/reportExtension/1.0.0/schema.json",
+  "name": "extension",
+  "entities": [
+    {
+      "name": "accounts",
+      "measures": [
+        {
+          "name": "Activos",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Assets\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Pasivos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Liabilities\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Patrimonio",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Equity\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Ingresos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Income\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Costo de ventas",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Cost_x0020_of_x0020_Goods_x0020_Sold\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Gastos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(accounts[netChange]), accounts[accountType] = \"Posting\", accounts[category] = \"Expense\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Resultado",
+          "dataType": "Double",
+          "expression": "[Ingresos] + [Costo de ventas] + [Gastos]",
+          "formatString": "#,0,, \"MM$\"",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "accounts",
+                "name": "Ingresos"
+              },
+              {
+                "schema": "extension",
+                "entity": "accounts",
+                "name": "Costo de ventas"
+              },
+              {
+                "schema": "extension",
+                "entity": "accounts",
+                "name": "Gastos"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Saldo natural",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUMX(accounts, IF(accounts[category] IN {\"Assets\", \"Expense\", \"Cost_x0020_of_x0020_Goods_x0020_Sold\"}, accounts[netChange], -accounts[netChange])), accounts[accountType] = \"Posting\")",
+          "formatString": "#,0,, \"MM$\""
+        }
+      ]
+    }
+  ]
+}

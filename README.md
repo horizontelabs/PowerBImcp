@@ -1,73 +1,53 @@
-# PowerBImcp — Power BI & Business Central Automation Engine
+# PowerBImcp — Resumen financiero de SIMONE SPA en Power BI
 
-Sistema de automatización y despliegue programático de reportes en **Power BI Service** utilizando el formato moderno **PBIR (Power BI Enhanced Report Format)** y la **API REST de Microsoft Fabric**, conectado al modelo de datos de **Dynamics 365 Business Central**.
+Generador programático de un reporte de Power BI en formato **PBIR**, publicado con la
+**Fabric REST API** sobre el modelo semántico de Dynamics 365 Business Central. No se
+usa Power BI Desktop: todo el reporte sale de `management_dashboard.py`.
 
----
+## El reporte
 
-## 🏛️ Dashboard Ejecutivo para Gerencia de Finanzas
+Una página, **Resumen financiero**, pensada para gerencia: sin tablas ni filtros,
+cuatro gráficos y nada que haya que operar.
 
-El proyecto incluye la generación automatizada de un dashboard ejecutivo minimalista para explorar y auditar el **Plan de Cuentas (Chart of Accounts)** de la compañía.
+| Gráfico | Qué muestra |
+|---|---|
+| Estructura financiera | Activos, pasivos y patrimonio |
+| Estado de resultados | Ingresos, costo de ventas, gastos y resultado acumulado |
+| Diez cuentas con mayor saldo | Cuentas imputables, saldo según su naturaleza contable |
+| Composición de activos | Treemap de las cuentas imputables de activo |
 
-### Componentes Clave:
-1. **Vista Principal — Maestro de Cuentas:**
-   - Tabla compacta con 3 columnas esenciales: `Nº Cuenta (ID)`, `Nombre de la Cuenta` y `Categoría Contable`.
-   - Navegación ágil, ordenamiento y selección interactiva.
-2. **Indicadores Ejecutivos Estructurales:**
-   - **Total Cuentas:** Conteo total de cuentas del catálogo (`386`).
-   - **Cuentas Imputables (Posting):** Cuentas operativas que reciben asientos contables (`231`).
-   - **Cuentas de Agrupación (Total):** Cuentas de cabecera y estructura (`155`).
-   - **Cuentas Bloqueadas:** Cuentas con restricción activa en Business Central (`14`).
-3. **Resumen Visual de Estructura:**
-   - Gráfico de barras horizontal que refleja la distribución del catálogo por categoría contable (Activos, Pasivos, Gastos, Ingresos, Patrimonio, Costo de Ventas).
-4. **Ficha de Detalle Interactivo:**
-   - Sincronización en tiempo real al seleccionar cualquier cuenta: visualización de tipo de cuenta, contabilización directa, estado de bloqueo, fecha de modificación y GUID de Business Central.
-5. **Auditoría Técnica Individual (Segunda Página):**
-   - Buscador predictivo por ID y Nombre, con todos los parámetros técnicos y de consolidación del ERP.
+Las cifras provienen de medidas a nivel de reporte (`reportExtensions.json`) que
+consideran sólo cuentas imputables (`Posting`), invierten el signo de los saldos
+acreedores y se expresan en millones de pesos (MM$). El modelo semántico no se toca.
 
----
+Enlace directo (requiere acceso al workspace del dueño):
+<https://app.powerbi.com/groups/me/reports/86bfa92e-97f1-4ee5-b045-f04cad6ebfe8/resumenFinanciero?experience=power-bi>
 
-## 📂 Estructura del Repositorio
+## Uso
 
-```text
-├── SIMONE_SPA_V3.pbip               # Proyecto Power BI Enhanced Report Format (PBIR)
-│   └── SIMONE_SPA_V3.Report/
-│       ├── definition/
-│       │   ├── pages/               # Definiciones JSON de páginas y visuales
-│       │   ├── report.json          # Configuración global del reporte
-│       │   └── version.json
-│       ├── definition.pbir          # Puntero semántico a Power BI Service
-│       └── StaticResources/        # Temas y paletas Fluent corporativas
-├── deploy_executive_finance_dashboard.py # Script de compilación y despliegue PBIR a la nube
-├── connect.py                       # Autenticación MSAL y verificación de dataset DAX
-├── Catalogo_SIMONE.pbip             # Proyecto PBIP base
-└── README.md
-```
-
----
-
-## 🚀 Requisitos e Instalación
-
-### Requisitos:
-* Python 3.10+
-* Cuenta de Microsoft con acceso a Power BI / Microsoft Fabric
-
-### Instalación:
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install requests msal
+python3 -m venv .venv && source .venv/bin/activate
+pip install requests msal jsonschema pytest
+python connect.py                          # primera vez: login con código de dispositivo, crea token.json
+python -m pytest                           # valida la definición contra los esquemas oficiales de PBIR
+python management_dashboard.py --dry-run   # genera y escribe SIMONE_SPA_V3.pbip sin publicar
+python management_dashboard.py             # publica a Power BI Service
 ```
 
-### Autenticación y Despliegue:
-```bash
-# Probar conexión con el servicio
-python connect.py
+## Estructura
 
-# Desplegar el dashboard ejecutivo directamente a Power BI Service
-python deploy_executive_finance_dashboard.py
+```
+management_dashboard.py        # medidas, página, visuales y despliegue
+tests/                         # tests del generador y esquemas PBIR vendorizados
+SIMONE_SPA_V3.pbip/            # copia local de la definición publicada (la escribe el script)
+connect.py                     # prueba de conexión y login inicial
+AGENTS.md                      # guía para agentes: reglas PBIR, diagnóstico de la versión anterior, checklist
 ```
 
----
+`Catalogo_SIMONE.pbix`, `deploy_powerbi_report.py`, `auto_generate_report.py` y
+`build_dashboard.py` son de una generación anterior y apuntan a otro dataset; se
+conservan como referencia pero no forman parte del flujo.
 
-## 🔐 Seguridad
-Los tokens de acceso y sesión (`token.json`, `.token_cache.bin`) están excluidos del repositorio a través de `.gitignore`.
+## Seguridad
+
+`token.json` y `.token_cache.bin` contienen credenciales y están en `.gitignore`.
