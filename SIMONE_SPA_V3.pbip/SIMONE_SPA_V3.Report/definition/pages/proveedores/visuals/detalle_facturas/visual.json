@@ -1,0 +1,234 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "detalle_facturas",
+  "position": {
+    "x": 40.0,
+    "y": 645.0,
+    "z": 9.0,
+    "width": 1840.0,
+    "height": 405.0,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "purchaseInvoices.number",
+              "nativeQueryRef": "number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "vendorInvoiceNumber"
+                }
+              },
+              "queryRef": "purchaseInvoices.vendorInvoiceNumber",
+              "nativeQueryRef": "vendorInvoiceNumber"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "vendorNumber"
+                }
+              },
+              "queryRef": "purchaseInvoices.vendorNumber",
+              "nativeQueryRef": "vendorNumber"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "vendorName"
+                }
+              },
+              "queryRef": "purchaseInvoices.vendorName",
+              "nativeQueryRef": "vendorName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "invoiceDate"
+                }
+              },
+              "queryRef": "purchaseInvoices.invoiceDate",
+              "nativeQueryRef": "invoiceDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "dueDate"
+                }
+              },
+              "queryRef": "purchaseInvoices.dueDate",
+              "nativeQueryRef": "dueDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "totalAmountIncludingTax"
+                }
+              },
+              "queryRef": "purchaseInvoices.totalAmountIncludingTax",
+              "nativeQueryRef": "totalAmountIncludingTax"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "status"
+                }
+              },
+              "queryRef": "purchaseInvoices.status",
+              "nativeQueryRef": "status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "purchaseInvoices"
+                    }
+                  },
+                  "Property": "currencyCode"
+                }
+              },
+              "queryRef": "purchaseInvoices.currencyCode",
+              "nativeQueryRef": "currencyCode"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ficha y Trazabilidad de Facturas de Compra (Business Central)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Listado detallado de documentos, folios DTE de proveedores y fechas de vencimiento originales'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52514e'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

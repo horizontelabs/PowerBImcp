@@ -1,0 +1,206 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "maestro_proveedores",
+  "position": {
+    "x": 40.0,
+    "y": 195.0,
+    "z": 7.0,
+    "width": 1090.0,
+    "height": 440.0,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "vendorNumber"
+                }
+              },
+              "queryRef": "agedAccountsPayables.vendorNumber",
+              "nativeQueryRef": "vendorNumber"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "agedAccountsPayables.name",
+              "nativeQueryRef": "name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "balanceDue"
+                }
+              },
+              "queryRef": "agedAccountsPayables.balanceDue",
+              "nativeQueryRef": "balanceDue"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "period3Amount"
+                }
+              },
+              "queryRef": "agedAccountsPayables.period3Amount",
+              "nativeQueryRef": "period3Amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "period2Amount"
+                }
+              },
+              "queryRef": "agedAccountsPayables.period2Amount",
+              "nativeQueryRef": "period2Amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "period1Amount"
+                }
+              },
+              "queryRef": "agedAccountsPayables.period1Amount",
+              "nativeQueryRef": "period1Amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "agedAccountsPayables"
+                    }
+                  },
+                  "Property": "currentAmount"
+                }
+              },
+              "queryRef": "agedAccountsPayables.currentAmount",
+              "nativeQueryRef": "currentAmount"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Maestro de Proveedores Acreedores y Tramos de Vencimiento'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Saldos clasificados por antigüedad: Al día, 1-30d, 31-60d y +60d (haz clic en una fila para filtrar)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52514e'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
