@@ -81,6 +81,61 @@ MEASURES = [
     ("Cuentas agrupación", 'CALCULATE(COUNTROWS(accounts), accounts[accountType] = "Total")', [], "#,0"),
     ("Cuentas bloqueadas", "CALCULATE(COUNTROWS(accounts), accounts[blocked] = TRUE)", [], "#,0"),
     ("Cuentas registro directo", "CALCULATE(COUNTROWS(accounts), accounts[directPosting] = TRUE)", [], "#,0"),
+    # Medidas de Proveedores y Cuentas por Pagar (AP)
+    (
+        "Saldo total proveedores",
+        'CALCULATE(SUM(agedAccountsPayables[balanceDue]), agedAccountsPayables[vendorNumber] <> "")',
+        [],
+        "$ #,0",
+    ),
+    (
+        "Deuda vencida",
+        'CALCULATE(SUM(agedAccountsPayables[balanceDue]) - SUM(agedAccountsPayables[currentAmount]), agedAccountsPayables[vendorNumber] <> "")',
+        [],
+        "$ #,0",
+    ),
+    (
+        "Deuda corriente",
+        'CALCULATE(SUM(agedAccountsPayables[currentAmount]), agedAccountsPayables[vendorNumber] <> "")',
+        [],
+        "$ #,0",
+    ),
+    (
+        "Porcentaje vencido",
+        "DIVIDE([Deuda vencida], [Saldo total proveedores], 0)",
+        ["Deuda vencida", "Saldo total proveedores"],
+        "0.0%",
+    ),
+    (
+        "Proveedores con saldo",
+        'CALCULATE(COUNTROWS(agedAccountsPayables), agedAccountsPayables[vendorNumber] <> "", agedAccountsPayables[balanceDue] > 0)',
+        [],
+        "#,0",
+    ),
+    (
+        "Mayor contable proveedores",
+        '-1 * CALCULATE(SUM(accounts[netChange]), LEFT(accounts[number], 4) = "2107", accounts[accountType] = "Posting")',
+        [],
+        "$ #,0",
+    ),
+    (
+        "Facturas abiertas",
+        'CALCULATE(COUNTROWS(purchaseInvoices), purchaseInvoices[status] = "Open")',
+        [],
+        "#,0",
+    ),
+    (
+        "Monto facturas abiertas",
+        'CALCULATE(SUM(purchaseInvoices[totalAmountIncludingTax]), purchaseInvoices[status] = "Open")',
+        [],
+        "$ #,0",
+    ),
+    (
+        "Deuda proveedor",
+        "SUM(agedAccountsPayables[balanceDue])",
+        [],
+        "$ #,0",
+    ),
 ]
 
 
@@ -97,20 +152,20 @@ def report_extensions():
 # ------------------------------------------------------ expression helpers ---
 
 
-def measure_ref(name):
-    return {"Measure": {"Expression": {"SourceRef": {"Schema": "extension", "Entity": ENTITY}}, "Property": name}}
+def measure_ref(name, entity=ENTITY):
+    return {"Measure": {"Expression": {"SourceRef": {"Schema": "extension", "Entity": entity}}, "Property": name}}
 
 
-def column_ref(column):
-    return {"Column": {"Expression": {"SourceRef": {"Entity": ENTITY}}, "Property": column}}
+def column_ref(column, entity=ENTITY):
+    return {"Column": {"Expression": {"SourceRef": {"Entity": entity}}, "Property": column}}
 
 
-def measure_projection(name):
-    return {"field": measure_ref(name), "queryRef": f"{ENTITY}.{name}", "nativeQueryRef": name}
+def measure_projection(name, entity=ENTITY):
+    return {"field": measure_ref(name, entity), "queryRef": f"{entity}.{name}", "nativeQueryRef": name}
 
 
-def column_projection(column, active=False):
-    p = {"field": column_ref(column), "queryRef": f"{ENTITY}.{column}", "nativeQueryRef": column}
+def column_projection(column, entity=ENTITY, active=False):
+    p = {"field": column_ref(column, entity), "queryRef": f"{entity}.{column}", "nativeQueryRef": column}
     if active:
         p["active"] = True
     return p
@@ -328,12 +383,36 @@ def category_distribution_bar(title, subtitle):
     }
 
 
-def table_visual(title, subtitle, columns):
+PAGE_3_NAME = "proveedores"
+
+
+def provider_distribution_bar(title, subtitle):
+    return {
+        "visualType": "clusteredBarChart",
+        "query": {
+            "queryState": {
+                "Category": {"projections": [column_projection("name", entity="agedAccountsPayables", active=True)]},
+                "Y": {"projections": [measure_projection("Deuda proveedor")]},
+            },
+            "sortDefinition": {"sort": [{"field": measure_ref("Deuda proveedor"), "direction": "Descending"}], "isDefaultSort": True},
+        },
+        "objects": {
+            "legend": props(show=literal("false")),
+            "labels": props(show=literal("true"), labelDisplayUnits=literal("1D"), labelPrecision=literal("0D"), color=solid(INK)),
+            "valueAxis": props(show=literal("false"), gridlineShow=literal("false")),
+            "categoryAxis": props(show=literal("true"), fontSize=literal("10D"), labelColor=solid(INK)),
+            "dataPoint": props(fill=solid(BLUE)),
+        },
+        "visualContainerObjects": header(title, subtitle),
+    }
+
+
+def table_visual(title, subtitle, columns, entity=ENTITY):
     return {
         "visualType": "tableEx",
         "query": {
             "queryState": {
-                "Values": {"projections": [column_projection(col) for col in columns]}
+                "Values": {"projections": [column_projection(col, entity=entity) for col in columns]}
             }
         },
         "visualContainerObjects": header(title, subtitle),
@@ -411,13 +490,153 @@ def page_2_visuals():
     ]
 
 
+def page_3_visuals():
+    return [
+        container(
+            "titulo_proveedores",
+            40,
+            25,
+            1840,
+            55,
+            1,
+            textbox(
+                "SIMONE SPA — Gestión de Proveedores y Cuentas por Pagar (AP)",
+                "Monitoreo ejecutivo de obligaciones, vencimientos por tramos y conciliación contable (Business Central)",
+            ),
+        ),
+        container(
+            "kpi_saldo_total",
+            40,
+            90,
+            350,
+            95,
+            2,
+            kpi_card(
+                "Saldo Total Pendiente",
+                "Obligaciones totales de pago vigentes",
+                "Saldo total proveedores",
+            ),
+        ),
+        container(
+            "kpi_deuda_vencida",
+            412,
+            90,
+            350,
+            95,
+            3,
+            kpi_card(
+                "Deuda Vencida (99,5%)",
+                "Obligaciones fuera de plazo exigible",
+                "Deuda vencida",
+            ),
+        ),
+        container(
+            "kpi_deuda_corriente",
+            784,
+            90,
+            350,
+            95,
+            4,
+            kpi_card(
+                "Por Vencer (Al Día)",
+                "Vencimientos corrientes en plazo",
+                "Deuda corriente",
+            ),
+        ),
+        container(
+            "kpi_proveedores_saldo",
+            1156,
+            90,
+            350,
+            95,
+            5,
+            kpi_card(
+                "Proveedores Acreedores",
+                "Empresas con saldo pendiente de pago",
+                "Proveedores con saldo",
+            ),
+        ),
+        container(
+            "kpi_mayor_contable",
+            1528,
+            90,
+            352,
+            95,
+            6,
+            kpi_card(
+                "Mayor Contable (Cta. 2107)",
+                "Saldo libro mayor cuenta Proveedores",
+                "Mayor contable proveedores",
+            ),
+        ),
+        container(
+            "maestro_proveedores",
+            40,
+            195,
+            1090,
+            440,
+            7,
+            table_visual(
+                "Maestro de Proveedores Acreedores y Tramos de Vencimiento",
+                "Saldos clasificados por antigüedad: Al día, 1-30d, 31-60d y +60d (haz clic en una fila para filtrar)",
+                [
+                    "vendorNumber",
+                    "name",
+                    "balanceDue",
+                    "period3Amount",
+                    "period2Amount",
+                    "period1Amount",
+                    "currentAmount",
+                ],
+                entity="agedAccountsPayables",
+            ),
+        ),
+        container(
+            "concentracion_proveedor",
+            1150,
+            195,
+            730,
+            440,
+            8,
+            provider_distribution_bar(
+                "Concentración de Deuda por Proveedor",
+                "Top acreedores: PwC ($5,2M), PKF ($2,7M) y Santiago Sale ($1,1M)",
+            ),
+        ),
+        container(
+            "detalle_facturas",
+            40,
+            645,
+            1840,
+            405,
+            9,
+            table_visual(
+                "Ficha y Trazabilidad de Facturas de Compra (Business Central)",
+                "Listado detallado de documentos, folios DTE de proveedores y fechas de vencimiento originales",
+                [
+                    "number",
+                    "vendorInvoiceNumber",
+                    "vendorNumber",
+                    "vendorName",
+                    "invoiceDate",
+                    "dueDate",
+                    "totalAmountIncludingTax",
+                    "status",
+                    "currencyCode",
+                ],
+                entity="purchaseInvoices",
+            ),
+        ),
+    ]
+
+
 def page_json(name, display_name):
     return {"$schema": SCHEMA_PAGE, "name": name, "displayName": display_name,
             "displayOption": "FitToPage", "height": 1080, "width": 1920}
 
 
 def pages_json():
-    return {"$schema": SCHEMA_PAGES, "pageOrder": [PAGE_NAME, PAGE_2_NAME], "activePageName": PAGE_NAME}
+    return {"$schema": SCHEMA_PAGES, "pageOrder": [PAGE_NAME, PAGE_2_NAME, PAGE_3_NAME], "activePageName": PAGE_NAME}
 
 
 # ------------------------------------------------------------- definition ---
@@ -443,6 +662,11 @@ def build_parts(base_parts):
     parts.append(_part(f"definition/pages/{PAGE_2_NAME}/page.json", page_json(PAGE_2_NAME, "Gobernanza del Catálogo")))
     for v in page_2_visuals():
         parts.append(_part(f"definition/pages/{PAGE_2_NAME}/visuals/{v['name']}/visual.json", v))
+
+    # Página 3: Proveedores y Cuentas por Pagar
+    parts.append(_part(f"definition/pages/{PAGE_3_NAME}/page.json", page_json(PAGE_3_NAME, "Gestión de Proveedores")))
+    for v in page_3_visuals():
+        parts.append(_part(f"definition/pages/{PAGE_3_NAME}/visuals/{v['name']}/visual.json", v))
 
     return parts
 
