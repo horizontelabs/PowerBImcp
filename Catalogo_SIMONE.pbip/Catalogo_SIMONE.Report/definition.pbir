@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "datasetReference": {
+    "byPath": null,
+    "byConnection": {
+      "connectionString": "Data Source=powerbi://api.powerbi.com/v1.0/myorg;Initial Catalog=d7c2a2e6-17f4-405d-a54a-20a718528dcd",
+      "pbiModelDatabaseName": "d7c2a2e6-17f4-405d-a54a-20a718528dcd"
+    }
+  }
+}

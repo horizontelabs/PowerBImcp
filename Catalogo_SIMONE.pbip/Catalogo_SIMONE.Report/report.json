@@ -1,0 +1,162 @@
+{
+  "id": 11624219,
+  "sections": [
+    {
+      "id": 0,
+      "name": "CatalogoSIMONEPage",
+      "displayName": "Cat\u00e1logo de Cuentas",
+      "filters": "[]",
+      "ordinal": 0,
+      "visualContainers": [
+        {
+          "x": 20.0,
+          "y": 15.0,
+          "z": 0.0,
+          "width": 1230.0,
+          "height": 45.0,
+          "config": "{\"name\": \"HeaderTitle\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 15.0, \"z\": 0.0, \"width\": 1230.0, \"height\": 45.0, \"tabOrder\": 0}}], \"singleVisual\": {\"visualType\": \"textbox\", \"objects\": {\"general\": [{\"properties\": {\"paragraphs\": [{\"textRuns\": [{\"value\": \"SIMONE SPA \\u2014 Cat\\u00e1logo de Cuentas Contables (Business Central)\", \"textStyle\": {\"fontWeight\": \"bold\", \"fontSize\": \"16pt\", \"color\": \"#1e293b\"}}]}]}}]}}}",
+          "filters": "[]"
+        },
+        {
+          "x": 20.0,
+          "y": 70.0,
+          "z": 1.0,
+          "width": 480.0,
+          "height": 480.0,
+          "config": "{\"name\": \"DonutCategoryVisual\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 20.0, \"y\": 70.0, \"z\": 1.0, \"width\": 480.0, \"height\": 480.0, \"tabOrder\": 1}}], \"singleVisual\": {\"visualType\": \"donutChart\", \"projections\": {\"Category\": [{\"queryRef\": \"accounts.category\", \"active\": true}], \"Y\": [{\"queryRef\": \"CountNonNull(accounts.number)\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"a\", \"Entity\": \"accounts\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"category\"}, \"Name\": \"accounts.category\"}, {\"Aggregation\": {\"Expression\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"number\"}}, \"Function\": 1}, \"Name\": \"CountNonNull(accounts.number)\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true}}",
+          "filters": "[]",
+          "query": "{\"Commands\": [{\"SemanticQueryDataShapeCommand\": {\"Query\": {\"Version\": 2, \"From\": [{\"Name\": \"a\", \"Entity\": \"accounts\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"category\"}, \"Name\": \"accounts.category\"}, {\"Aggregation\": {\"Expression\": {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"number\"}}, \"Function\": 1}, \"Name\": \"CountNonNull(accounts.number)\"}]}, \"Binding\": {\"Primary\": {\"Groupings\": [{\"Projections\": [0]}]}, \"DataReduction\": {\"DataVolume\": 4, \"Primary\": {\"Top\": {\"Count\": 100}}}, \"Version\": 1}, \"ExecutionMetricsKind\": 1}}]}"
+        },
+        {
+          "x": 520.0,
+          "y": 70.0,
+          "z": 2.0,
+          "width": 730.0,
+          "height": 580.0,
+          "config": "{\"name\": \"AccountsTableVisual\", \"layouts\": [{\"id\": 0, \"position\": {\"x\": 520.0, \"y\": 70.0, \"z\": 2.0, \"width\": 730.0, \"height\": 580.0, \"tabOrder\": 2}}], \"singleVisual\": {\"visualType\": \"tableEx\", \"projections\": {\"Values\": [{\"queryRef\": \"accounts.number\"}, {\"queryRef\": \"accounts.displayName\"}, {\"queryRef\": \"accounts.category\"}, {\"queryRef\": \"accounts.accountType\"}, {\"queryRef\": \"accounts.netChange\"}]}, \"prototypeQuery\": {\"Version\": 2, \"From\": [{\"Name\": \"a\", \"Entity\": \"accounts\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"number\"}, \"Name\": \"accounts.number\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"displayName\"}, \"Name\": \"accounts.displayName\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"category\"}, \"Name\": \"accounts.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"accountType\"}, \"Name\": \"accounts.accountType\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"netChange\"}, \"Name\": \"accounts.netChange\"}]}, \"drillFilterOtherVisuals\": true, \"hasDefaultSort\": true}}",
+          "filters": "[]",
+          "query": "{\"Commands\": [{\"SemanticQueryDataShapeCommand\": {\"Query\": {\"Version\": 2, \"From\": [{\"Name\": \"a\", \"Entity\": \"accounts\", \"Type\": 0}], \"Select\": [{\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"number\"}, \"Name\": \"accounts.number\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"displayName\"}, \"Name\": \"accounts.displayName\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"category\"}, \"Name\": \"accounts.category\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"accountType\"}, \"Name\": \"accounts.accountType\"}, {\"Column\": {\"Expression\": {\"SourceRef\": {\"Source\": \"a\"}}, \"Property\": \"netChange\"}, \"Name\": \"accounts.netChange\"}]}, \"Binding\": {\"Primary\": {\"Groupings\": [{\"Projections\": [0, 1, 2, 3, 4]}]}, \"DataReduction\": {\"DataVolume\": 4, \"Primary\": {\"Window\": {\"Count\": 500}}}, \"Version\": 1}, \"ExecutionMetricsKind\": 1}}]}"
+        }
+      ],
+      "config": "{}",
+      "width": 1280.0,
+      "height": 720.0
+    }
+  ],
+  "pods": [
+    {
+      "id": 31686266,
+      "name": "Pod4",
+      "objectId": "5e8593a1-a8b9-4f32-adad-ef704c4a4dac",
+      "boundSection": "ReportSectionafa55b151d0a170acb2d",
+      "parameters": "[{\"name\":\"Param_Filterd8b4c34f4fe005f142b1\",\"boundFilter\":\"Filterd8b4c34f4fe005f142b1\",\"fieldExpr\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Country\"}},\"Property\":\"Country\"}}}]",
+      "type": 1,
+      "config": "{}"
+    }
+  ],
+  "config": "{\"version\":\"5.27\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY21SU04\",\"version\":\"5.23\",\"type\":2}},\"activeSectionIndex\":0,\"bookmarks\":[{\"displayName\":\"DT Map hide\",\"name\":\"Bookmark426f1f8550078ba44520\",\"explorationState\":{\"version\":\"1.3\",\"activeSection\":\"ReportSection5b95c0a84497949005b8\",\"filters\":{\"byExpr\":[{\"name\":\"Filter0ccc74e648950317be29\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Year\"}},\"howCreated\":1},{\"name\":\"Filtere702fec8d0d403e863bb\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Product Category\"}},\"howCreated\":1}]},\"sections\":{\"ReportSection5b95c0a84497949005b8\":{\"visualContainers\":{}}},\"objects\":{\"merge\":{\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}},\"options\":{\"targetVisualNames\":[]}},{\"displayName\":\"DT Map show\",\"name\":\"Bookmark1509c2d6c32956a79808\",\"explorationState\":{\"version\":\"1.3\",\"activeSection\":\"ReportSection5b95c0a84497949005b8\",\"filters\":{\"byExpr\":[{\"name\":\"Filter0ccc74e648950317be29\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Year\"}},\"howCreated\":1},{\"name\":\"Filtere702fec8d0d403e863bb\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Product Category\"}},\"howCreated\":1}]},\"sections\":{\"ReportSection5b95c0a84497949005b8\":{\"visualContainers\":{}}},\"objects\":{\"merge\":{\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}},\"options\":{\"targetVisualNames\":[]}},{\"displayName\":\"DT details Map hide\",\"name\":\"Bookmark0d433c2e9a44b33884b3\",\"explorationState\":{\"version\":\"1.3\",\"activeSection\":\"ReportSection81a5dc2ea4760c086e77\",\"filters\":{\"byExpr\":[{\"name\":\"Filter0ccc74e648950317be29\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Year\"}},\"howCreated\":1},{\"name\":\"Filtere702fec8d0d403e863bb\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Product Category\"}},\"howCreated\":1}]},\"sections\":{\"ReportSection81a5dc2ea4760c086e77\":{\"filters\":{\"byExpr\":[{\"name\":\"Filterdb051d43997a6de870c1\",\"type\":\"Categorical\",\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Country\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Country\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'South Korea'\"}}]]}}}]},\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Country\"}},\"Property\":\"Country\"}},\"howCreated\":5}]},\"visualContainers\":{}}},\"objects\":{\"merge\":{\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}},\"options\":{\"targetVisualNames\":[]}},{\"displayName\":\"DT details Map show\",\"name\":\"Bookmark3c2ab7e07bb114a60d80\",\"explorationState\":{\"version\":\"1.3\",\"activeSection\":\"ReportSection81a5dc2ea4760c086e77\",\"filters\":{\"byExpr\":[{\"name\":\"Filter0ccc74e648950317be29\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Year\"}},\"howCreated\":1},{\"name\":\"Filtere702fec8d0d403e863bb\",\"type\":\"Categorical\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Product\"}},\"Property\":\"Product Category\"}},\"howCreated\":1}]},\"sections\":{\"ReportSection81a5dc2ea4760c086e77\":{\"filters\":{\"byExpr\":[{\"name\":\"Filterdb051d43997a6de870c1\",\"type\":\"Categorical\",\"filter\":{\"Version\":2,\"From\":[{\"Name\":\"c\",\"Entity\":\"Country\",\"Type\":0}],\"Where\":[{\"Condition\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"c\"}},\"Property\":\"Country\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"'South Korea'\"}}]]}}}]},\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"Country\"}},\"Property\":\"Country\"}},\"howCreated\":5}]},\"visualContainers\":{}}},\"objects\":{\"merge\":{\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}},\"options\":{\"targetVisualNames\":[]}}],\"defaultDrillFilterOtherVisuals\":true,\"filterSortOrder\":3,\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useStylableVisualContainerHeader\":true,\"exportDataMode\":1,\"allowChangeFilterTypes\":true,\"allowAutomatedInsightsNotification\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}},\"visible\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}}",
+  "reportId": 3252318,
+  "filters": "[]",
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "id": 8713292,
+        "type": 1,
+        "name": "RegisteredResources",
+        "items": [
+          {
+            "id": 53138494,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "arrow5564611107544495.png",
+            "name": "arrow5564611107544495.png"
+          },
+          {
+            "id": 53138495,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Features3744968098524115.png",
+            "name": "Features3744968098524115.png"
+          },
+          {
+            "id": 53138496,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Party_popper006108015251035104.png",
+            "name": "Party_popper006108015251035104.png"
+          },
+          {
+            "id": 53138497,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Power_BI_lockup43672154305755995.png",
+            "name": "Power_BI_lockup43672154305755995.png"
+          },
+          {
+            "id": 53138498,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Rectangle_2322111795280268307.png",
+            "name": "Rectangle_2322111795280268307.png"
+          },
+          {
+            "id": 53138499,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "report-container.png6866591791712202.png",
+            "name": "report-container.png6866591791712202.png"
+          },
+          {
+            "id": 53138500,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Report_container_(2)8449093863061057.png",
+            "name": "Report_container_(2)8449093863061057.png"
+          },
+          {
+            "id": 53138501,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "reset_to_default9392316503146909.png",
+            "name": "reset_to_default9392316503146909.png"
+          },
+          {
+            "id": 53138502,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Screen_Shot_2022-05-06_at_3.11427403826051852.png",
+            "name": "Screen_Shot_2022-05-06_at_3.11427403826051852.png"
+          },
+          {
+            "id": 53138503,
+            "resourcePackageId": 8713292,
+            "type": 100,
+            "path": "Vector33222948871756963.png",
+            "name": "Vector33222948871756963.png"
+          }
+        ],
+        "reportId": 3252318
+      }
+    },
+    {
+      "resourcePackage": {
+        "id": 8713293,
+        "type": 2,
+        "name": "SharedResources",
+        "items": [
+          {
+            "id": 53138504,
+            "resourcePackageId": 8713293,
+            "type": 202,
+            "path": "BaseThemes/CY21SU04.json",
+            "name": "CY21SU04"
+          }
+        ],
+        "reportId": 0,
+        "disabled": false
+      }
+    }
+  ],
+  "layoutOptimization": 0,
+  "publicCustomVisuals": []
+}

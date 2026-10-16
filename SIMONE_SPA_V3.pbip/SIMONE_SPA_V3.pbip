@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "artifacts": [
+    {
+      "report": {
+        "path": "SIMONE_SPA_V3.Report"
+      }
+    }
+  ]
+}

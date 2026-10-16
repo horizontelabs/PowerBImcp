@@ -1,0 +1,228 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "p2_table_audit",
+  "position": {
+    "x": 40.0,
+    "y": 235.0,
+    "z": 8.0,
+    "width": 1840.0,
+    "height": 810.0,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "accounts.number",
+              "displayName": "Nº Cuenta (ID)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "displayName"
+                }
+              },
+              "queryRef": "accounts.displayName",
+              "displayName": "Nombre de Cuenta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "accounts.category",
+              "displayName": "Categoría"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "subCategory"
+                }
+              },
+              "queryRef": "accounts.subCategory",
+              "displayName": "Subcategoría"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "accountType"
+                }
+              },
+              "queryRef": "accounts.accountType",
+              "displayName": "Tipo de Cuenta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "directPosting"
+                }
+              },
+              "queryRef": "accounts.directPosting",
+              "displayName": "Permite Contabilización Directa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "blocked"
+                }
+              },
+              "queryRef": "accounts.blocked",
+              "displayName": "¿Bloqueada para Asientos?"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "consolidationTranslationMethod"
+                }
+              },
+              "queryRef": "accounts.consolidationTranslationMethod",
+              "displayName": "Método Conversión Consolidación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "consolidationDebitAccount"
+                }
+              },
+              "queryRef": "accounts.consolidationDebitAccount",
+              "displayName": "Cuenta Débito Consolidación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "consolidationCreditAccount"
+                }
+              },
+              "queryRef": "accounts.consolidationCreditAccount",
+              "displayName": "Cuenta Crédito Consolidación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "excludeFromConsolidation"
+                }
+              },
+              "queryRef": "accounts.excludeFromConsolidation",
+              "displayName": "Excluida de Consolidación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "lastModifiedDateTime"
+                }
+              },
+              "queryRef": "accounts.lastModifiedDateTime",
+              "displayName": "Fecha Última Modificación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "accounts"
+                    }
+                  },
+                  "Property": "id"
+                }
+              },
+              "queryRef": "accounts.id",
+              "displayName": "GUID Business Central (ID Sistema)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ficha Técnica y Configuración del Sistema en Business Central'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
