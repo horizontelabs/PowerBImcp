@@ -59,28 +59,35 @@ def _balance(category, sign=""):
 
 
 MEASURES = [
-    # name, DAX, measures it references within the extension
-    ("Activos", _balance(CATEGORY["assets"]), []),
-    ("Pasivos", _balance(CATEGORY["liabilities"], "-"), []),
-    ("Patrimonio", _balance(CATEGORY["equity"], "-"), []),
-    ("Ingresos", _balance(CATEGORY["income"], "-"), []),
-    ("Costo de ventas", _balance(CATEGORY["cogs"], "-"), []),
-    ("Gastos", _balance(CATEGORY["expense"], "-"), []),
-    ("Resultado", "[Ingresos] + [Costo de ventas] + [Gastos]", ["Ingresos", "Costo de ventas", "Gastos"]),
+    # name, DAX, measures it references within the extension, formatString
+    ("Activos", _balance(CATEGORY["assets"]), [], MILLIONS),
+    ("Pasivos", _balance(CATEGORY["liabilities"], "-"), [], MILLIONS),
+    ("Patrimonio", _balance(CATEGORY["equity"], "-"), [], MILLIONS),
+    ("Ingresos", _balance(CATEGORY["income"], "-"), [], MILLIONS),
+    ("Costo de ventas", _balance(CATEGORY["cogs"], "-"), [], MILLIONS),
+    ("Gastos", _balance(CATEGORY["expense"], "-"), [], MILLIONS),
+    ("Resultado", "[Ingresos] + [Costo de ventas] + [Gastos]", ["Ingresos", "Costo de ventas", "Gastos"], MILLIONS),
     (
         "Saldo natural",
         "CALCULATE(SUMX(accounts, IF(accounts[category] IN {"
         + ", ".join(f'"{c}"' for c in DEBIT_NATURE)
         + f"}}, accounts[netChange], -accounts[netChange])), {POSTING})",
         [],
+        MILLIONS,
     ),
+    # Medidas de Gobernanza y Auditoría del Catálogo
+    ("Total cuentas", "COUNTROWS(accounts)", [], "#,0"),
+    ("Cuentas imputables", 'CALCULATE(COUNTROWS(accounts), accounts[accountType] = "Posting")', [], "#,0"),
+    ("Cuentas agrupación", 'CALCULATE(COUNTROWS(accounts), accounts[accountType] = "Total")', [], "#,0"),
+    ("Cuentas bloqueadas", "CALCULATE(COUNTROWS(accounts), accounts[blocked] = TRUE)", [], "#,0"),
+    ("Cuentas registro directo", "CALCULATE(COUNTROWS(accounts), accounts[directPosting] = TRUE)", [], "#,0"),
 ]
 
 
 def report_extensions():
     measures = []
-    for name, expression, refs in MEASURES:
-        m = {"name": name, "dataType": "Double", "expression": expression, "formatString": MILLIONS}
+    for name, expression, refs, fmt in MEASURES:
+        m = {"name": name, "dataType": "Double", "expression": expression, "formatString": fmt}
         if refs:
             m["references"] = {"measures": [{"schema": "extension", "entity": ENTITY, "name": r} for r in refs]}
         measures.append(m)
@@ -282,14 +289,65 @@ def assets_treemap(title, subtitle):
     }
 
 
-# --------------------------------------------------------------- the page ---
+PAGE_2_NAME = "gobernanzaCatalogo"
+
+
+def kpi_card(title, subtitle, measure_name):
+    return {
+        "visualType": "card",
+        "query": {
+            "queryState": {
+                "Values": {"projections": [measure_projection(measure_name)]}
+            }
+        },
+        "objects": {
+            "labels": props(fontSize=literal("22D"), color=solid(INK)),
+        },
+        "visualContainerObjects": header(title, subtitle),
+    }
+
+
+def category_distribution_bar(title, subtitle):
+    return {
+        "visualType": "clusteredBarChart",
+        "query": {
+            "queryState": {
+                "Category": {"projections": [column_projection("category", active=True)]},
+                "Y": {"projections": [measure_projection("Total cuentas")]},
+            },
+            "sortDefinition": {"sort": [{"field": measure_ref("Total cuentas"), "direction": "Descending"}], "isDefaultSort": True},
+        },
+        "objects": {
+            "legend": props(show=literal("false")),
+            "labels": props(show=literal("true"), labelDisplayUnits=literal("1D"), labelPrecision=literal("0D"), color=solid(INK)),
+            "valueAxis": props(show=literal("false"), gridlineShow=literal("false")),
+            "categoryAxis": props(show=literal("true"), fontSize=literal("10D"), labelColor=solid(INK)),
+            "dataPoint": props(fill=solid(BLUE)),
+        },
+        "visualContainerObjects": header(title, subtitle),
+    }
+
+
+def table_visual(title, subtitle, columns):
+    return {
+        "visualType": "tableEx",
+        "query": {
+            "queryState": {
+                "Values": {"projections": [column_projection(col) for col in columns]}
+            }
+        },
+        "visualContainerObjects": header(title, subtitle),
+    }
+
+
+# -------------------------------------------------------------- the pages ---
 
 # 1920 x 1080 canvas, 40px gutter, two rows of two.
 COL = [(40, 900), (980, 900)]
 ROW = [(110, 460), (600, 450)]
 
 
-def page_visuals():
+def page_1_visuals():
     (x1, w), (x2, _) = COL
     (y1, h1), (y2, h2) = ROW
     return [
@@ -320,13 +378,46 @@ def page_visuals():
     ]
 
 
-def page_json():
-    return {"$schema": SCHEMA_PAGE, "name": PAGE_NAME, "displayName": "Resumen financiero",
+def page_2_visuals():
+    return [
+        container("titulo_gobernanza", 40, 25, 1840, 55, 1, textbox(
+            "SIMONE SPA — Gobernanza y Auditoría del Catálogo Contable",
+            "Supervisión del Plan de Cuentas (Business Central) — Cuentas operativas, bloqueos y políticas de imputación",
+        )),
+        container("kpi_total_cuentas", 40, 90, 440, 95, 2, kpi_card(
+            "Total Cuentas Catálogo", "Universo completo registrado en BC", "Total cuentas",
+        )),
+        container("kpi_cuentas_imputables", 505, 90, 440, 95, 3, kpi_card(
+            "Cuentas Imputables (Posting)", "Cuentas operativas que reciben asientos", "Cuentas imputables",
+        )),
+        container("kpi_cuentas_bloqueadas", 970, 90, 440, 95, 4, kpi_card(
+            "Cuentas Bloqueadas", "Restringidas para nuevos registros", "Cuentas bloqueadas",
+        )),
+        container("kpi_registro_directo", 1435, 90, 445, 95, 5, kpi_card(
+            "Contabilización Directa", "Permiten imputación manual por diario", "Cuentas registro directo",
+        )),
+        container("maestro_cuentas", 40, 195, 980, 855, 6, table_visual(
+            "Maestro de Cuentas Contables", "Haz clic en cualquier fila para cargar su ficha técnica",
+            ["number", "displayName", "category"],
+        )),
+        container("distribucion_categoria", 1045, 195, 835, 365, 7, category_distribution_bar(
+            "Distribución del Catálogo por Categoría", "Cantidad de cuentas por clase contable",
+        )),
+        container("ficha_cuenta", 1045, 575, 835, 475, 8, table_visual(
+            "Ficha Técnica de Cuenta (Detalle al seleccionar)",
+            "Parámetros de sistema y políticas de registro en Business Central",
+            ["number", "displayName", "category", "subCategory", "accountType", "directPosting", "blocked", "lastModifiedDateTime", "id"],
+        )),
+    ]
+
+
+def page_json(name, display_name):
+    return {"$schema": SCHEMA_PAGE, "name": name, "displayName": display_name,
             "displayOption": "FitToPage", "height": 1080, "width": 1920}
 
 
 def pages_json():
-    return {"$schema": SCHEMA_PAGES, "pageOrder": [PAGE_NAME], "activePageName": PAGE_NAME}
+    return {"$schema": SCHEMA_PAGES, "pageOrder": [PAGE_NAME, PAGE_2_NAME], "activePageName": PAGE_NAME}
 
 
 # ------------------------------------------------------------- definition ---
@@ -342,9 +433,17 @@ def build_parts(base_parts):
              if not p["path"].startswith("definition/pages/") and p["path"] != "definition/reportExtensions.json"]
     parts.append(_part("definition/reportExtensions.json", report_extensions()))
     parts.append(_part("definition/pages/pages.json", pages_json()))
-    parts.append(_part(f"definition/pages/{PAGE_NAME}/page.json", page_json()))
-    for v in page_visuals():
+
+    # Página 1: Resumen Financiero
+    parts.append(_part(f"definition/pages/{PAGE_NAME}/page.json", page_json(PAGE_NAME, "Resumen financiero")))
+    for v in page_1_visuals():
         parts.append(_part(f"definition/pages/{PAGE_NAME}/visuals/{v['name']}/visual.json", v))
+
+    # Página 2: Gobernanza del Catálogo
+    parts.append(_part(f"definition/pages/{PAGE_2_NAME}/page.json", page_json(PAGE_2_NAME, "Gobernanza del Catálogo")))
+    for v in page_2_visuals():
+        parts.append(_part(f"definition/pages/{PAGE_2_NAME}/visuals/{v['name']}/visual.json", v))
+
     return parts
 
 
