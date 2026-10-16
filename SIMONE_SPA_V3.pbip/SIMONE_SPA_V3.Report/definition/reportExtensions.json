@@ -71,6 +71,36 @@
           "dataType": "Double",
           "expression": "CALCULATE(SUMX(accounts, IF(accounts[category] IN {\"Assets\", \"Expense\", \"Cost_x0020_of_x0020_Goods_x0020_Sold\"}, accounts[netChange], -accounts[netChange])), accounts[accountType] = \"Posting\")",
           "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Total cuentas",
+          "dataType": "Double",
+          "expression": "COUNTROWS(accounts)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas imputables",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[accountType] = \"Posting\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas agrupación",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[accountType] = \"Total\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas bloqueadas",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[blocked] = TRUE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas registro directo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[directPosting] = TRUE)",
+          "formatString": "#,0"
         }
       ]
     }
