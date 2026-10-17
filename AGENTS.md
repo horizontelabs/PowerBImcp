@@ -14,21 +14,24 @@ Dynamics 365 Business Central; el reporte sólo lo consume.
 
 | Recurso | Valor |
 |---|---|
-| Reporte | `SIMONE SPA V3`, id `86bfa92e-97f1-4ee5-b045-f04cad6ebfe8` |
-| Modelo semántico | `SIMONE SPA V3`, id `83af4580-d8a1-4519-ae25-98bff396291a` |
-| Workspace | "Mi área de trabajo" del dueño (`f97935fd-…`). Es personal: nadie más ve el reporte hasta que se comparta o se mueva a un workspace de equipo. |
+| Reporte Multiempresa | `HOLDING INSIGNE V1`, id `67d5b2fd-4139-4c10-8948-ec838415f5f3` |
+| Modelo Multiempresa | `HOLDING INSIGNE V1`, id `c71af0b4-2794-415e-a304-ce9a9fcb3619` (37 filiales, 14.356 cuentas) |
+| Reporte Individual | `SIMONE SPA V3`, id `86bfa92e-97f1-4ee5-b045-f04cad6ebfe8` |
+| Modelo Individual | `SIMONE SPA V3`, id `83af4580-d8a1-4519-ae25-98bff396291a` |
+| Workspace | "Mi área de trabajo" del dueño (`f97935fd-…`). |
 | Autenticación | MSAL, flujo de código de dispositivo, app pública `ea0616ba-…`. El token queda en `token.json` (ignorado por git). |
 
 ## Estructura
 
 ```
-management_dashboard.py          # ÚNICA fuente de verdad del reporte: medidas, página, visuales, deploy
-tests/test_management_dashboard.py
+holding_dashboard.py             # Generador PBIR para HOLDING INSIGNE (multiempresa, 37 filiales)
+management_dashboard.py          # Generador PBIR para SIMONE SPA V3 (individual)
+tests/test_holding_dashboard.py  # Tests unitarios y validación de esquemas para Holding Insigne
+tests/test_management_dashboard.py # Tests unitarios para Simone SpA
 tests/schemas/                   # esquemas JSON oficiales de PBIR (microsoft/json-schemas), vendorizados
-SIMONE_SPA_V3.pbip/              # copia local de la definición publicada; la escribe el script, no se edita a mano
+HOLDING_INSIGNE_V1.pbip/         # copia local sincronizada de la definición de HOLDING INSIGNE
+SIMONE_SPA_V3.pbip/              # copia local sincronizada de la definición de SIMONE SPA
 connect.py                       # prueba de conexión y login inicial (genera token.json)
-Catalogo_SIMONE.pbix, deploy_powerbi_report.py,
-auto_generate_report.py, build_dashboard.py   # generación anterior, apuntan a otro dataset; legado, no se usan
 ```
 
 ## Flujo de trabajo

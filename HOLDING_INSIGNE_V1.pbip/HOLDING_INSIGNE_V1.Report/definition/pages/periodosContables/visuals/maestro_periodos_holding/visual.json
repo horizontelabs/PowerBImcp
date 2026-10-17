@@ -1,0 +1,206 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "maestro_periodos_holding",
+  "position": {
+    "x": 40.0,
+    "y": 195.0,
+    "z": 7.0,
+    "width": 1840.0,
+    "height": 855.0,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "Empresa"
+                }
+              },
+              "queryRef": "periodosHolding.Empresa",
+              "nativeQueryRef": "Empresa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "startingDate"
+                }
+              },
+              "queryRef": "periodosHolding.startingDate",
+              "nativeQueryRef": "startingDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "periodosHolding.name",
+              "nativeQueryRef": "name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "newFiscalYear"
+                }
+              },
+              "queryRef": "periodosHolding.newFiscalYear",
+              "nativeQueryRef": "newFiscalYear"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "closed"
+                }
+              },
+              "queryRef": "periodosHolding.closed",
+              "nativeQueryRef": "closed"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "dateLocked"
+                }
+              },
+              "queryRef": "periodosHolding.dateLocked",
+              "nativeQueryRef": "dateLocked"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "periodosHolding"
+                    }
+                  },
+                  "Property": "lastModifiedDateTime"
+                }
+              },
+              "queryRef": "periodosHolding.lastModifiedDateTime",
+              "nativeQueryRef": "lastModifiedDateTime"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auditoría Consolidada de Períodos Contables y Ejercicios Fiscales'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Listado detallado por empresa, fecha de inicio, estado de cierre y bloqueo de fecha en Business Central'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.5D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52514e'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
