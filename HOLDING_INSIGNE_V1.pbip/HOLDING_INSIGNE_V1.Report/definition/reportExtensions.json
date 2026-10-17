@@ -1,0 +1,204 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/reportExtension/1.0.0/schema.json",
+  "name": "extension",
+  "entities": [
+    {
+      "name": "cuentasHolding",
+      "measures": [
+        {
+          "name": "Activos",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Assets\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Pasivos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Liabilities\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Patrimonio",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Equity\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Ingresos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Income\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Costo de ventas",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Cost_x0020_of_x0020_Goods_x0020_Sold\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Gastos",
+          "dataType": "Double",
+          "expression": "-CALCULATE(SUM(cuentasHolding[netChange]), cuentasHolding[accountType] = \"Posting\", cuentasHolding[category] = \"Expense\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Resultado",
+          "dataType": "Double",
+          "expression": "[Ingresos] + [Costo de ventas] + [Gastos]",
+          "formatString": "#,0,, \"MM$\"",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "cuentasHolding",
+                "name": "Ingresos"
+              },
+              {
+                "schema": "extension",
+                "entity": "cuentasHolding",
+                "name": "Costo de ventas"
+              },
+              {
+                "schema": "extension",
+                "entity": "cuentasHolding",
+                "name": "Gastos"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Saldo natural",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUMX(cuentasHolding, IF(cuentasHolding[category] IN {\"Assets\", \"Expense\", \"Cost_x0020_of_x0020_Goods_x0020_Sold\"}, cuentasHolding[netChange], -cuentasHolding[netChange])), cuentasHolding[accountType] = \"Posting\")",
+          "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Empresas activas",
+          "dataType": "Double",
+          "expression": "DISTINCTCOUNT(cuentasHolding[Empresa])",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Total cuentas",
+          "dataType": "Double",
+          "expression": "COUNTROWS(cuentasHolding)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas imputables",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(cuentasHolding), cuentasHolding[accountType] = \"Posting\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas agrupacion",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(cuentasHolding), cuentasHolding[accountType] = \"Total\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas bloqueadas",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(cuentasHolding), cuentasHolding[blocked] = TRUE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas registro directo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(cuentasHolding), cuentasHolding[directPosting] = TRUE)",
+          "formatString": "#,0"
+        }
+      ]
+    },
+    {
+      "name": "periodosHolding",
+      "measures": [
+        {
+          "name": "Total periodos",
+          "dataType": "Double",
+          "expression": "COUNTROWS(periodosHolding)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Periodos cerrados",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(periodosHolding), periodosHolding[closed] = TRUE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Periodos abiertos",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(periodosHolding), periodosHolding[closed] = FALSE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Fechas bloqueadas",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(periodosHolding), periodosHolding[dateLocked] = TRUE)",
+          "formatString": "#,0"
+        }
+      ]
+    },
+    {
+      "name": "proveedoresHolding",
+      "measures": [
+        {
+          "name": "Saldo total proveedores",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda vencida",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]) - SUM(proveedoresHolding[currentAmount]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda corriente",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[currentAmount]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Porcentaje vencido",
+          "dataType": "Double",
+          "expression": "DIVIDE([Deuda vencida], [Saldo total proveedores], 0)",
+          "formatString": "0.0%",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "proveedoresHolding",
+                "name": "Deuda vencida"
+              },
+              {
+                "schema": "extension",
+                "entity": "proveedoresHolding",
+                "name": "Saldo total proveedores"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Proveedores con saldo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(proveedoresHolding), proveedoresHolding[vendorNumber] <> \"\", proveedoresHolding[balanceDue] > 0)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Deuda proveedor",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Mayor contable proveedores",
+          "dataType": "Double",
+          "expression": "-1 * CALCULATE(SUM(cuentasHolding[netChange]), LEFT(cuentasHolding[number], 4) = \"2107\", cuentasHolding[accountType] = \"Posting\")",
+          "formatString": "$ #,0"
+        }
+      ]
+    }
+  ]
+}

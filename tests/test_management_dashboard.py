@@ -87,12 +87,31 @@ def test_page_holds_a_title_and_exactly_four_charts(by_path):
     assert not {"slicer", "tableEx", "card"} & set(charts), types
 
 
-def test_pages_metadata_points_only_at_the_new_page(by_path, parts):
+def test_pages_metadata_points_to_all_pages(by_path, parts):
     meta = by_path["definition/pages/pages.json"]
-    assert len(meta["pageOrder"]) == 1
-    assert meta["activePageName"] == meta["pageOrder"][0]
-    assert f"definition/pages/{meta['pageOrder'][0]}/page.json" in by_path
+    assert len(meta["pageOrder"]) == 3
+    assert meta["pageOrder"] == [md.PAGE_NAME, md.PAGE_2_NAME, md.PAGE_3_NAME]
+    for p in meta["pageOrder"]:
+        assert f"definition/pages/{p}/page.json" in by_path
     assert not any(p["path"].startswith("definition/pages/oldpage") for p in parts)
+
+
+def test_page_2_holds_governance_layout(by_path):
+    visuals = [doc for path, doc in by_path.items() if path.startswith(f"definition/pages/{md.PAGE_2_NAME}/visuals/")]
+    types = [v["visual"]["visualType"] for v in visuals]
+    assert types.count("textbox") == 1
+    assert types.count("card") == 4
+    assert types.count("tableEx") == 2
+    assert types.count("clusteredBarChart") == 1
+
+
+def test_page_3_holds_proveedores_layout(by_path):
+    visuals = [doc for path, doc in by_path.items() if path.startswith(f"definition/pages/{md.PAGE_3_NAME}/visuals/")]
+    types = [v["visual"]["visualType"] for v in visuals]
+    assert types.count("textbox") == 1
+    assert types.count("card") == 5
+    assert types.count("tableEx") == 2
+    assert types.count("clusteredBarChart") == 1
 
 
 def test_report_metadata_from_the_base_definition_is_kept(parts):

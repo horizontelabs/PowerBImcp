@@ -1,0 +1,220 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "maestro_cuentas_holding",
+  "position": {
+    "x": 40.0,
+    "y": 595.0,
+    "z": 10.0,
+    "width": 1840.0,
+    "height": 455.0,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "Empresa"
+                }
+              },
+              "queryRef": "cuentasHolding.Empresa",
+              "nativeQueryRef": "Empresa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "cuentasHolding.number",
+              "nativeQueryRef": "number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "displayName"
+                }
+              },
+              "queryRef": "cuentasHolding.displayName",
+              "nativeQueryRef": "displayName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "category"
+                }
+              },
+              "queryRef": "cuentasHolding.category",
+              "nativeQueryRef": "category"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "accountType"
+                }
+              },
+              "queryRef": "cuentasHolding.accountType",
+              "nativeQueryRef": "accountType"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "blocked"
+                }
+              },
+              "queryRef": "cuentasHolding.blocked",
+              "nativeQueryRef": "blocked"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "directPosting"
+                }
+              },
+              "queryRef": "cuentasHolding.directPosting",
+              "nativeQueryRef": "directPosting"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "cuentasHolding"
+                    }
+                  },
+                  "Property": "netChange"
+                }
+              },
+              "queryRef": "cuentasHolding.netChange",
+              "nativeQueryRef": "netChange"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Maestro Consolidado de Cuentas Contables (Búsqueda y Auditoría)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Detalle de cuentas, clasificación, políticas de registro y saldo contable acumulado por sociedad'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.5D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52514e'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

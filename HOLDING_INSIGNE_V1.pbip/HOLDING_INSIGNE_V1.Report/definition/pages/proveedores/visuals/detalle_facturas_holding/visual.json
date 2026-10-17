@@ -1,0 +1,220 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "name": "detalle_facturas_holding",
+  "position": {
+    "x": 1160.0,
+    "y": 625.0,
+    "z": 12.0,
+    "width": 720.0,
+    "height": 425.0,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "Empresa"
+                }
+              },
+              "queryRef": "facturasHolding.Empresa",
+              "nativeQueryRef": "Empresa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "number"
+                }
+              },
+              "queryRef": "facturasHolding.number",
+              "nativeQueryRef": "number"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "vendorInvoiceNumber"
+                }
+              },
+              "queryRef": "facturasHolding.vendorInvoiceNumber",
+              "nativeQueryRef": "vendorInvoiceNumber"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "vendorName"
+                }
+              },
+              "queryRef": "facturasHolding.vendorName",
+              "nativeQueryRef": "vendorName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "invoiceDate"
+                }
+              },
+              "queryRef": "facturasHolding.invoiceDate",
+              "nativeQueryRef": "invoiceDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "dueDate"
+                }
+              },
+              "queryRef": "facturasHolding.dueDate",
+              "nativeQueryRef": "dueDate"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "totalAmountIncludingTax"
+                }
+              },
+              "queryRef": "facturasHolding.totalAmountIncludingTax",
+              "nativeQueryRef": "totalAmountIncludingTax"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "status"
+                }
+              },
+              "queryRef": "facturasHolding.status",
+              "nativeQueryRef": "status"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ficha y Trazabilidad de Facturas de Compra (Holding Insigne)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Documentos de compra registrados, folios DTE y vencimientos por sociedad'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9.5D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52514e'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

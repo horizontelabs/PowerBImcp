@@ -71,6 +71,104 @@
           "dataType": "Double",
           "expression": "CALCULATE(SUMX(accounts, IF(accounts[category] IN {\"Assets\", \"Expense\", \"Cost_x0020_of_x0020_Goods_x0020_Sold\"}, accounts[netChange], -accounts[netChange])), accounts[accountType] = \"Posting\")",
           "formatString": "#,0,, \"MM$\""
+        },
+        {
+          "name": "Total cuentas",
+          "dataType": "Double",
+          "expression": "COUNTROWS(accounts)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas imputables",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[accountType] = \"Posting\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas agrupación",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[accountType] = \"Total\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas bloqueadas",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[blocked] = TRUE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Cuentas registro directo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(accounts), accounts[directPosting] = TRUE)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Saldo total proveedores",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(agedAccountsPayables[balanceDue]), agedAccountsPayables[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda vencida",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(agedAccountsPayables[balanceDue]) - SUM(agedAccountsPayables[currentAmount]), agedAccountsPayables[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda corriente",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(agedAccountsPayables[currentAmount]), agedAccountsPayables[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Porcentaje vencido",
+          "dataType": "Double",
+          "expression": "DIVIDE([Deuda vencida], [Saldo total proveedores], 0)",
+          "formatString": "0.0%",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "accounts",
+                "name": "Deuda vencida"
+              },
+              {
+                "schema": "extension",
+                "entity": "accounts",
+                "name": "Saldo total proveedores"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Proveedores con saldo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(agedAccountsPayables), agedAccountsPayables[vendorNumber] <> \"\", agedAccountsPayables[balanceDue] > 0)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Mayor contable proveedores",
+          "dataType": "Double",
+          "expression": "-1 * CALCULATE(SUM(accounts[netChange]), LEFT(accounts[number], 4) = \"2107\", accounts[accountType] = \"Posting\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Facturas abiertas",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(purchaseInvoices), purchaseInvoices[status] = \"Open\")",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Monto facturas abiertas",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(purchaseInvoices[totalAmountIncludingTax]), purchaseInvoices[status] = \"Open\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda proveedor",
+          "dataType": "Double",
+          "expression": "SUM(agedAccountsPayables[balanceDue])",
+          "formatString": "$ #,0"
         }
       ]
     }

@@ -4,24 +4,21 @@ Generador programático de un reporte de Power BI en formato **PBIR**, publicado
 **Fabric REST API** sobre el modelo semántico de Dynamics 365 Business Central. No se
 usa Power BI Desktop: todo el reporte sale de `management_dashboard.py`.
 
-## El reporte
+## Reportes Disponibles
 
-Una página, **Resumen financiero**, pensada para gerencia: sin tablas ni filtros,
-cuatro gráficos y nada que haya que operar.
+1. **HOLDING INSIGNE V1 (Multiempresa — 37 Sociedades)**:
+   - Report ID: `67d5b2fd-4139-4c10-8948-ec838415f5f3` | Dataset ID: `c71af0b4-2794-415e-a304-ce9a9fcb3619`
+   - Páginas:
+     - `consolidadoFinanciero`: KPIs consolidados de Activos ($1.58B), Pasivos, Patrimonio, Resultado, selector interactivo de filial, rankings de sociedades y matriz financiera ejecutiva.
+     - `gobernanzaCatalogo`: Auditoría y homologación de 14.356 cuentas contables, desglose por clase y maestro consolidado.
+     - `proveedores`: Gestión de proveedores y cuentas por pagar consolidadas (deuda total de $3.47B, ratio vencido, concentración por filial y proveedor, maestro con tramos de vencimiento, catálogo maestro de 17.610 proveedores y 3.598 facturas de compra trazables en 37 filiales).
+     - `periodosContables`: Control de 1.116 períodos contables, meses cerrados y fechas bloqueadas en las 37 filiales.
+   - Enlace directo: <https://app.powerbi.com/groups/me/reports/67d5b2fd-4139-4c10-8948-ec838415f5f3/consolidadoFinanciero?experience=power-bi>
 
-| Gráfico | Qué muestra |
-|---|---|
-| Estructura financiera | Activos, pasivos y patrimonio |
-| Estado de resultados | Ingresos, costo de ventas, gastos y resultado acumulado |
-| Diez cuentas con mayor saldo | Cuentas imputables, saldo según su naturaleza contable |
-| Composición de activos | Treemap de las cuentas imputables de activo |
-
-Las cifras provienen de medidas a nivel de reporte (`reportExtensions.json`) que
-consideran sólo cuentas imputables (`Posting`), invierten el signo de los saldos
-acreedores y se expresan en millones de pesos (MM$). El modelo semántico no se toca.
-
-Enlace directo (requiere acceso al workspace del dueño):
-<https://app.powerbi.com/groups/me/reports/86bfa92e-97f1-4ee5-b045-f04cad6ebfe8/resumenFinanciero?experience=power-bi>
+2. **SIMONE SPA V3 (Individual — INVERSIONES SIMONE SPA)**:
+   - Report ID: `86bfa92e-97f1-4ee5-b045-f04cad6ebfe8` | Dataset ID: `83af4580-d8a1-4519-ae25-98bff396291a`
+   - Páginas: `resumenFinanciero`, `gobernanzaCatalogo`, `proveedores`.
+   - Enlace directo: <https://app.powerbi.com/groups/me/reports/86bfa92e-97f1-4ee5-b045-f04cad6ebfe8/resumenFinanciero?experience=power-bi>
 
 ## Uso
 
@@ -37,9 +34,11 @@ python management_dashboard.py             # publica a Power BI Service
 ## Estructura
 
 ```
-management_dashboard.py        # medidas, página, visuales y despliegue
-tests/                         # tests del generador y esquemas PBIR vendorizados
-SIMONE_SPA_V3.pbip/            # copia local de la definición publicada (la escribe el script)
+management_dashboard.py        # reporte SIMONE SPA: medidas, páginas, visuales y despliegue
+holding_dashboard.py           # reporte HOLDING INSIGNE: consolidación de 37 filiales, ranking y gobernanza
+tests/                         # tests de ambos generadores y esquemas PBIR vendorizados
+SIMONE_SPA_V3.pbip/            # copia local de la definición de SIMONE SPA
+HOLDING_INSIGNE_V1.pbip/       # copia local de la definición multiempresa HOLDING INSIGNE
 connect.py                     # prueba de conexión y login inicial
 AGENTS.md                      # guía para agentes: reglas PBIR, diagnóstico de la versión anterior, checklist
 ```
