@@ -149,3 +149,16 @@ def test_every_chart_measure_exists_in_the_extension(by_path):
 
     assert used, "Visuals should use report-level measures"
     assert used <= defined, used - defined
+
+
+def test_page_3_invoices_table_references_facturas_holding_and_multicompany(by_path):
+    inv_visual = by_path[f"definition/pages/{hd.PAGE_3_NAME}/visuals/detalle_facturas_holding/visual.json"]
+    projections = inv_visual["visual"]["query"]["queryState"]["Values"]["projections"]
+    entities = {p["field"]["Column"]["Expression"]["SourceRef"]["Entity"] for p in projections}
+    assert entities == {"facturasHolding"}, f"Expected only facturasHolding entity, got {entities}"
+    columns = [p["field"]["Column"]["Property"] for p in projections]
+    assert "Empresa" in columns, "Empresa column must be present for multi-company visibility"
+    assert "number" in columns
+    assert "vendorInvoiceNumber" in columns
+    assert "vendorName" in columns
+

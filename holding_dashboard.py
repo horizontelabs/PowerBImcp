@@ -46,7 +46,8 @@ PAGE_4_NAME = "periodosContables"
 ENTITY_ACCOUNTS = "cuentasHolding"
 ENTITY_PERIODS = "periodosHolding"
 ENTITY_PROV = "proveedoresHolding"
-ENTITY_INVOICES = "purchaseInvoices"
+ENTITY_INVOICES = "facturasHolding"
+ENTITY_VENDORS = "maestroVendorsHolding"
 
 POSTING = 'cuentasHolding[accountType] = "Posting"'
 CATEGORY = {
@@ -529,9 +530,9 @@ def page_3_visuals():
             entity=ENTITY_PROV,
         )),
         container("detalle_facturas_holding", 1160, 625, 720, 425, 12, table_visual(
-            "Ficha y Trazabilidad de Facturas de Compra (Business Central)",
-            "Documentos de compra registrados, folios DTE y vencimientos",
-            ["number", "vendorInvoiceNumber", "vendorName", "invoiceDate", "dueDate", "totalAmountIncludingTax", "status"],
+            "Ficha y Trazabilidad de Facturas de Compra (Holding Insigne)",
+            "Documentos de compra registrados, folios DTE y vencimientos por sociedad",
+            ["Empresa", "number", "vendorInvoiceNumber", "vendorName", "invoiceDate", "dueDate", "totalAmountIncludingTax", "status"],
             entity=ENTITY_INVOICES,
         )),
     ]

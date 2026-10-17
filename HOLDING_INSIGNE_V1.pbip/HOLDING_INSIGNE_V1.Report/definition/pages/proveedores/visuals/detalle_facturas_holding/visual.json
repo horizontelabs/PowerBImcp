@@ -20,13 +20,27 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
+                    }
+                  },
+                  "Property": "Empresa"
+                }
+              },
+              "queryRef": "facturasHolding.Empresa",
+              "nativeQueryRef": "Empresa"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "number"
                 }
               },
-              "queryRef": "purchaseInvoices.number",
+              "queryRef": "facturasHolding.number",
               "nativeQueryRef": "number"
             },
             {
@@ -34,13 +48,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "vendorInvoiceNumber"
                 }
               },
-              "queryRef": "purchaseInvoices.vendorInvoiceNumber",
+              "queryRef": "facturasHolding.vendorInvoiceNumber",
               "nativeQueryRef": "vendorInvoiceNumber"
             },
             {
@@ -48,13 +62,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "vendorName"
                 }
               },
-              "queryRef": "purchaseInvoices.vendorName",
+              "queryRef": "facturasHolding.vendorName",
               "nativeQueryRef": "vendorName"
             },
             {
@@ -62,13 +76,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "invoiceDate"
                 }
               },
-              "queryRef": "purchaseInvoices.invoiceDate",
+              "queryRef": "facturasHolding.invoiceDate",
               "nativeQueryRef": "invoiceDate"
             },
             {
@@ -76,13 +90,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "dueDate"
                 }
               },
-              "queryRef": "purchaseInvoices.dueDate",
+              "queryRef": "facturasHolding.dueDate",
               "nativeQueryRef": "dueDate"
             },
             {
@@ -90,13 +104,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "totalAmountIncludingTax"
                 }
               },
-              "queryRef": "purchaseInvoices.totalAmountIncludingTax",
+              "queryRef": "facturasHolding.totalAmountIncludingTax",
               "nativeQueryRef": "totalAmountIncludingTax"
             },
             {
@@ -104,13 +118,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "purchaseInvoices"
+                      "Entity": "facturasHolding"
                     }
                   },
                   "Property": "status"
                 }
               },
-              "queryRef": "purchaseInvoices.status",
+              "queryRef": "facturasHolding.status",
               "nativeQueryRef": "status"
             }
           ]
@@ -131,7 +145,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Ficha y Trazabilidad de Facturas de Compra (Business Central)'"
+                  "Value": "'Ficha y Trazabilidad de Facturas de Compra (Holding Insigne)'"
                 }
               }
             },
@@ -176,7 +190,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Documentos de compra registrados, folios DTE y vencimientos'"
+                  "Value": "'Documentos de compra registrados, folios DTE y vencimientos por sociedad'"
                 }
               }
             },
