@@ -3,6 +3,7 @@
   "pageOrder": [
     "consolidadoFinanciero",
     "gobernanzaCatalogo",
+    "proveedores",
     "periodosContables"
   ],
   "activePageName": "consolidadoFinanciero"

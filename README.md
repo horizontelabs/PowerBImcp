@@ -11,6 +11,7 @@ usa Power BI Desktop: todo el reporte sale de `management_dashboard.py`.
    - Páginas:
      - `consolidadoFinanciero`: KPIs consolidados de Activos ($1.58B), Pasivos, Patrimonio, Resultado, selector interactivo de filial, rankings de sociedades y matriz financiera ejecutiva.
      - `gobernanzaCatalogo`: Auditoría y homologación de 14.356 cuentas contables, desglose por clase y maestro consolidado.
+     - `proveedores`: Gestión de proveedores y cuentas por pagar consolidadas (deuda total de $3.47B, ratio vencido, concentración por filial y proveedor, maestro con tramos de vencimiento y facturas).
      - `periodosContables`: Control de 1.116 períodos contables, meses cerrados y fechas bloqueadas en las 37 filiales.
    - Enlace directo: <https://app.powerbi.com/groups/me/reports/67d5b2fd-4139-4c10-8948-ec838415f5f3/consolidadoFinanciero?experience=power-bi>
 

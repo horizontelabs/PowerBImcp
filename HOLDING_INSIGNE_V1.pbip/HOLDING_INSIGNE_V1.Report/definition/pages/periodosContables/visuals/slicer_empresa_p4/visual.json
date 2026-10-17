@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
-  "name": "slicer_empresa_p3",
+  "name": "slicer_empresa_p4",
   "position": {
     "x": 1440.0,
     "y": 20.0,

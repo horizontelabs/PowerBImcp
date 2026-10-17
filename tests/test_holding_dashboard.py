@@ -73,8 +73,8 @@ def test_every_generated_json_part_validates_against_its_declared_schema(by_path
 
 def test_pages_metadata_points_to_all_pages(by_path):
     meta = by_path["definition/pages/pages.json"]
-    assert len(meta["pageOrder"]) == 3
-    assert meta["pageOrder"] == [hd.PAGE_1_NAME, hd.PAGE_2_NAME, hd.PAGE_3_NAME]
+    assert len(meta["pageOrder"]) == 4
+    assert meta["pageOrder"] == [hd.PAGE_1_NAME, hd.PAGE_2_NAME, hd.PAGE_3_NAME, hd.PAGE_4_NAME]
     for p in meta["pageOrder"]:
         assert f"definition/pages/{p}/page.json" in by_path
 
@@ -100,8 +100,18 @@ def test_page_2_holds_holding_governance_layout(by_path):
     assert types.count("tableEx") == 1
 
 
-def test_page_3_holds_holding_periods_layout(by_path):
+def test_page_3_holds_holding_proveedores_layout(by_path):
     visuals = [doc for path, doc in by_path.items() if path.startswith(f"definition/pages/{hd.PAGE_3_NAME}/visuals/")]
+    types = [v["visual"]["visualType"] for v in visuals]
+    assert types.count("textbox") == 1
+    assert types.count("slicer") == 1
+    assert types.count("card") == 6
+    assert types.count("clusteredBarChart") == 2
+    assert types.count("tableEx") == 2
+
+
+def test_page_4_holds_holding_periods_layout(by_path):
+    visuals = [doc for path, doc in by_path.items() if path.startswith(f"definition/pages/{hd.PAGE_4_NAME}/visuals/")]
     types = [v["visual"]["visualType"] for v in visuals]
     assert types.count("textbox") == 1
     assert types.count("slicer") == 1

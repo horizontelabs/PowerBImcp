@@ -138,6 +138,67 @@
           "formatString": "#,0"
         }
       ]
+    },
+    {
+      "name": "proveedoresHolding",
+      "measures": [
+        {
+          "name": "Saldo total proveedores",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda vencida",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]) - SUM(proveedoresHolding[currentAmount]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Deuda corriente",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[currentAmount]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Porcentaje vencido",
+          "dataType": "Double",
+          "expression": "DIVIDE([Deuda vencida], [Saldo total proveedores], 0)",
+          "formatString": "0.0%",
+          "references": {
+            "measures": [
+              {
+                "schema": "extension",
+                "entity": "proveedoresHolding",
+                "name": "Deuda vencida"
+              },
+              {
+                "schema": "extension",
+                "entity": "proveedoresHolding",
+                "name": "Saldo total proveedores"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Proveedores con saldo",
+          "dataType": "Double",
+          "expression": "CALCULATE(COUNTROWS(proveedoresHolding), proveedoresHolding[vendorNumber] <> \"\", proveedoresHolding[balanceDue] > 0)",
+          "formatString": "#,0"
+        },
+        {
+          "name": "Deuda proveedor",
+          "dataType": "Double",
+          "expression": "CALCULATE(SUM(proveedoresHolding[balanceDue]), proveedoresHolding[vendorNumber] <> \"\")",
+          "formatString": "$ #,0"
+        },
+        {
+          "name": "Mayor contable proveedores",
+          "dataType": "Double",
+          "expression": "-1 * CALCULATE(SUM(cuentasHolding[netChange]), LEFT(cuentasHolding[number], 4) = \"2107\", cuentasHolding[accountType] = \"Posting\")",
+          "formatString": "$ #,0"
+        }
+      ]
     }
   ]
 }
